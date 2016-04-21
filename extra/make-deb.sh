@@ -1,11 +1,15 @@
 #!/bin/bash
 set -ex
-
+# adding comment to make this move forward`
 # Ensure we're always in the right directory.
 SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
 cd $SCRIPT_DIR/..
 
-BRANCH=$(git symbolic-ref --short -q HEAD)
+if [ -z "$TRAVIS_BRANCH" ]; then
+   BRANCH=$(git symbolic-ref --short -q HEAD)
+else
+   BRANCH=${TRAVIS_BRANCH}
+fi
 
 if [ -z "$DEBFULLNAME" ]; then
         export DEBFULLNAME=`git log -n 1 --pretty=format:%an`
